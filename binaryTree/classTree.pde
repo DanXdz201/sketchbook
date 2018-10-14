@@ -1,58 +1,86 @@
 class Tree {
   //Atributos
-  Node [] myNodes = new Node[1];
+  Node [] myNodes;
 
   //Constructor
   Tree(Node root) {
-    myNodes[0] = root; //Raíz del árbol
-  }
-  
-  //Métodos
-  
-  //Agregar nodo a la izquierda
-  //Datos del nodo nuevo: (id, valor) + Datos del nodo padre
-  void leftNode(int id, int val, Node padre) {
-    //Se pone el id del futuro nodo nuevo que estará a la izq de nodo padre
-    padre.left = str(id);
-    //Se crea el nuevo nodo, se le da un valor, se le asigna un padre y un id
-    Node n = new Node(val, int(padre.id), id);
-    //Se agrega nuevo nodo al árbol
-    myNodes = (Node []) append(myNodes, n);
-  }
-  
-  //Agregar nodo a la derecha
-  //Datos del nodo nuevo: (id, valor) + Datos del nodo padre
-  void rightNode(int id, int val, Node padre) {
-    padre.right = str(id);
-    Node n = new Node(val, int(padre.id), id);
-    myNodes = (Node []) append(myNodes, n);
+    myNodes = new Node[1];
+    myNodes[0] = root;
   }
 
-  boolean selectSide(int val, int n) {
-    boolean empty = false;
-    if (val <= int(myNodes[n].value) && myNodes[n].left == null) {
-      leftNode(myNodes.length, val, myNodes[n]);
-      empty = true;
+  //Métodos
+  //Compara nuevo valor con el valor del nodo padre para ir a izq o der
+  String chooseSide(int id, int val) {
+    String side;
+    if (val <= int(myNodes[id].value)) {
+      side = "left";
+    } else {
+      side = "right";
     }
-    if (val > int(myNodes[n].value) && myNodes[n].right == null) {
-      rightNode(myNodes.length, val, myNodes[n]);
-      empty = true;
+    return side;
+  }
+  
+  //Devuelve verdadero si left del nodo(id) está vacío
+  boolean checkEmptyLeft(int id) {
+    boolean res;
+    if (myNodes[id].left == null) {
+      res = true;
+    } else {
+      res = false;
     }
-    return empty;
+    return res;
+  }
+  
+  //Devuelve verdadero si right del nodo(id) está vacío
+  boolean checkEmptyRight(int id) {
+    boolean res;
+    if (myNodes[id].right == null) {
+      res = true;
+    } else {
+      res = false;
+    }
+    return res;
+  }
+  
+  //Añade valor de left al nodo padre
+  void addLeftChild(int idParent, int idChild) {
+    myNodes[idParent].left = str(idChild);
+  }
+  
+  //Añade valor de right al nodo padre
+  void addRightChild(int idParent, int idChild) {
+    myNodes[idParent].right = str(idChild);
+  }
+
+  void searchNode(int val, int id) {
+    String side;
+    boolean found = false;
+
+    while (found == false) {
+      side = chooseSide(id, val);
+      if (side == "left") {
+        if (checkEmptyLeft(id) == true) {
+          addLeftChild(id, myNodes.length);
+          Node n = new Node(val, id, myNodes.length);
+          myNodes = (Node []) append(myNodes, n);
+          found = true;
+        } else {
+          id = int(myNodes[id].left);
+        }
+      } else {
+        if (checkEmptyRight(id) == true) {
+          addRightChild(id, myNodes.length);
+          Node n = new Node(val, id, myNodes.length);
+          myNodes = (Node []) append(myNodes, n);
+          found = true;
+        } else {
+          id = int(myNodes[id].right);
+        }
+      }
+    }
   }
 
   void addValue(int val) {
-    int next = 0;
-    boolean test = selectSide(val, next);
-    while (test == false) {
-      if (val <= int(myNodes[next].value)) {
-        next = int(myNodes[next].left);
-        test = selectSide(val, next);
-      } else {
-        next = int(myNodes[next].right);
-        test = selectSide(val, next);
-        
-      }
-    }
+    searchNode(val, 0);
   }
 }

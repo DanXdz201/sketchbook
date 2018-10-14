@@ -1,13 +1,13 @@
-class Node {
+class Node{
   //Atributos
   String id;
+  String parent;
   String value;
   String left;
   String right;
-  String parent;
-
-  //Constructor for a root node
-  Node(int x) {
+  
+  //Constructor para el nodo raíz
+  Node(int x){
     id = "0";
     parent = null;
     value = str(x);
@@ -15,12 +15,14 @@ class Node {
     right = null;
   }
   
-  //Constructor for a child node
-  Node(int x, int p, int i) {
+  //Constructor para los nodos hijos
+  Node(int x, int p, int i){
     id = str(i);
     parent = str(p);
     value = str(x);
     left = null;
     right = null;
   }
+  
+  //Métodos
 }

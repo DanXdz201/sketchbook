@@ -1,23 +1,22 @@
-//Título: Árbol Binario
-//Autor: Víctor de Jesús Medrano Zarazúa
-//Parte 1: Estructura del árbol
-
-int [] x = {2, 1, 10, 9, 8, 7, 12, 6, 3};
+//Paso 1: Crear vector
+int [] x = {13, 3, 4, 19, 10, 17};
 Node root;
-Tree arbolito;
+Tree bin;
 
 void setup() {
   root = new Node(x[0]);
-  arbolito = new Tree(root);
-  for(int i = 1; i < x.length; i++){ 
-    arbolito.addValue(x[i]);
+  bin = new Tree(root);
+  for (int i = 1; i < x.length; i++) {
+    bin.addValue(x[i]);
   }
-  int nodo = 7;
-  println("Id: ", arbolito.myNodes[nodo].id);
-  println("Padre: ", arbolito.myNodes[nodo].parent);
-  println("Valor: ", arbolito.myNodes[nodo].value);
-  println("Izq: ", arbolito.myNodes[nodo].left);
-  println("Der: ", arbolito.myNodes[nodo].right);
+  for (int i = 0; i < x.length; i++) {
+    println("id: ", bin.myNodes[i].id);
+    println("par: ", bin.myNodes[i].parent);
+    println("val:", bin.myNodes[i].value);
+    println("izq:", bin.myNodes[i].left);
+    println("der:", bin.myNodes[i].right);
+    println("----------------------------");
+  }
 }
 
 void draw() {
