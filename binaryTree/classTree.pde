@@ -55,7 +55,9 @@ class Tree {
   void searchNode(int val, int id) {
     String side;
     boolean found = false;
-
+    
+    //Busca hasta encontrar un nodo vacío
+    //Dependiendo si el valor a agregar es menor o mayor
     while (found == false) {
       side = chooseSide(id, val);
       if (side == "left") {
